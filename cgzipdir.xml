@@ -7,7 +7,7 @@
 	<authorUrl>www.conseilgouz.com</authorUrl>
 	<copyright>ConseilGouz</copyright>
 	<license>GNU/GPL</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>PLG_CONTENT_CGZIPDIR_DESC</description>
 	<files>
 		<filename plugin="cgzipdir">cgzipdir.php</filename>
@@ -20,7 +20,7 @@
 		<language tag="en-GB">language/en-GB/plg_content_cgzipdir.sys.ini</language>
 	</languages>
 	<scriptfile>script.php</scriptfile>
-	<changelogurl>https://raw.githubusercontent.com/conseilgouz/plg_content_cgzipdir_j4/master/cgzipdir_changelog.xml</changelogurl>
+	<changelogurl>https://raw.githubusercontent.com/conseilgouz/plg_content_cgzipdir_j4/master/plg_content_cgzipdir_changelog.xml</changelogurl>
 	<config>
 	<fields name="params">
 		<fieldset name="basic">
