@@ -1,7 +1,7 @@
 <?php
 /**
 * CG ZipDir Plugin  - Joomla 4.0.0 Module 
-* Version			: 1.0.0
+* Version			: 1.0.2
 * copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
 * license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
 */
@@ -15,8 +15,8 @@ use Joomla\CMS\Filesystem\File;
 
 class plgcontentcgzipdirInstallerScript
 {
-	private $min_joomla_version      = '4.0.0';
-	private $min_php_version         = '8.0';
+	private $min_joomla_version      = '3.10.0';
+	private $min_php_version         = '7.4';
 	private $name                    = 'Plugin CG ZipDir';
 	private $exttype                 = 'plugin';
 	private $extname                 = 'cgzipdir';
