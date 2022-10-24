@@ -1,0 +1,14 @@
+<changelogs>
+	<changelog>
+		<element>cgzipdir</element>
+		<type>plugin</type>
+		<group>content</group>
+		<version>1.0.0</version>
+        <note>
+            <item>Update : 24/10/2022</item>
+        </note>
+         <addition>
+            <item>New plugin</item>
+        </addition>
+	</changelog>
+</changelogs>
