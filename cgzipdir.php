@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version		1.0.0
+ * @version		1.0.3
  * @package		CGZipDir content plugin
  * @author		ConseilGouz
  * @copyright	Copyright (C) 2022 ConseilGouz. All rights reserved.
@@ -38,10 +38,14 @@ class plgContentCGZipDir extends CMSPlugin
 		    foreach($matches[0] as $key=>$ashort) {
 		        if (preg_match_all($regex, $ashort[0], $dirs, PREG_SET_ORDER)) { // ensure the more specific regex matches
 		            foreach ($dirs as $onedir) {
-		                $backup = 'tmp/'.$onedir[3].'.zip';
-		                $this->createzip($onedir[3],$backup); // zip a directory
-		                $output = "<a href=".$backup." download=".$onedir[3].'.zip'." class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
-		                $article->text = str_replace($onedir[0], $output, $article->text);
+		                $backup = str_replace('/','_',$onedir[3]).'.zip';
+		                if ($this->createzip($onedir[3],$backup)) { // zip a directory
+		                  $base =  str_replace('/','_',$onedir[3]);
+		                  $output = "<a href='tmp/".$backup."' download='tmp/".$base.".zip' class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
+		                  $article->text = str_replace($onedir[0], $output, $article->text);
+		                } else {// Zip creation Error
+		                    $article->text = str_replace($onedir[0], Text::_('PLG_CONTENT_CGZIPDIR_ERROR'), $article->text);
+		                }
 		            }
 		        }
 		    }
@@ -61,7 +65,7 @@ class plgContentCGZipDir extends CMSPlugin
         array_push($exclusions,'index.html');
     // Excluding the backup file
         array_push($exclusions,$dest);
-        $this->Zip($dir,$dest, false, $exclusions);
+        return $this->Zip($dir,$dest, false, $exclusions);
     }	
     function Zip($source, $destination, $include_dir = false, $exclusions = false){
     // Remove existing archive
@@ -69,20 +73,34 @@ class plgContentCGZipDir extends CMSPlugin
             unlink ($destination);
         }
         $zip = new ZipArchive();
-        if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+        if (!$zip->open('tmp/'.$destination, ZIPARCHIVE::CREATE)) {
             return false;
         }
         $base = $source;
         $folder = 'images/'.$this->params->get('folder','');
         
         $zip = $this->zip_r($folder.'/'.$source, $zip, $base,$exclusions);
-        $zip->close();
+        if ($zip) {
+            $zip->close();
+            return true;
+        } else {
+            return false;
+        }
     }
     function zip_r($from, $zip, $base=false,$exclusions=false) {
-        if (!file_exists($from) OR !extension_loaded('zip')) {return false;}
-        if (!$base) {$base = $from;}
-        $base = trim($base, '/');
+        if (!file_exists($from)){
+            Factory::getApplication()->enqueueMessage(Text::sprintf('PLG_CONTENT_CGZIPDIR_NOTFOUND',$from),'error');
+            return false;
+        }
+        if (!extension_loaded('zip')) {
+            Factory::getApplication()->enqueueMessage(Text::_('PLG_CONTENT_CGZIPDIR_NOZIP'),'error');
+            return false;
+        }
+        if (!$base) {
+            $base = $from;
+        }  
         $zip->addEmptyDir($base);
+       
         $dir = opendir($from);
         while (false !== ($file = readdir($dir))) {
             if ($file == '.' OR $file == '..') {continue;}
@@ -92,9 +110,9 @@ class plgContentCGZipDir extends CMSPlugin
                 }
             }
             if (is_dir($from . '/' . $file)) {
-                $this->zip_r($from . '/' . $file, $zip, $base . '/' . $file);
+                $zip = $this->zip_r($from . '/' . $file, $zip, $base . '/' . $file);
             } else {
-                $zip->addFile($from . '/' . $file, $base . '/' . $file);
+                $zip->addFile($from . '/' . $file, $base.'/'.$file);
             }
         }
         return $zip;

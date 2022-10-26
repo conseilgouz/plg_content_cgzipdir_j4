@@ -3,6 +3,18 @@
 		<element>cgzipdir</element>
 		<type>plugin</type>
 		<group>content</group>
+		<version>1.0.3</version>
+        <note>
+            <item>Update : 26/10/2022</item>
+        </note>
+         <addition>
+            <item>Initial dir is a subdir</item>
+        </addition>
+	</changelog>
+	<changelog>
+		<element>cgzipdir</element>
+		<type>plugin</type>
+		<group>content</group>
 		<version>1.0.2</version>
         <note>
             <item>Update : 24/10/2022</item>
