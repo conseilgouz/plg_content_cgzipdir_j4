@@ -7,7 +7,7 @@
 	<authorUrl>www.conseilgouz.com</authorUrl>
 	<copyright>ConseilGouz</copyright>
 	<license>GNU/GPL</license>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<description>PLG_CONTENT_CGZIPDIR_DESC</description>
 	<files>
 		<filename plugin="cgzipdir">cgzipdir.php</filename>

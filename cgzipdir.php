@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version		1.0.4
+ * @version		1.0.5
  * @package		CGZipDir content plugin
  * @author		ConseilGouz
  * @copyright	Copyright (C) 2022 ConseilGouz. All rights reserved.
@@ -43,7 +43,7 @@ class plgContentCGZipDir extends CMSPlugin
 		                $backup = str_replace('/','_',$onedir[3]).'.zip';
 		                if ($this->createzip($onedir[3],$backup)) { // zip a directory
 		                  $base =  str_replace('/','_',$onedir[3]);
-		                  $output = "<a href='".$uri::root()."/tmp/".$backup."' download='".$uri::root()."/tmp/".$base.".zip' class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
+		                  $output = "<a href='".$uri::root()."/tmp/".$backup."' download='".$base.".zip' class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
 		                  $article->text = str_replace($onedir[0], $output, $article->text);
 		                } else {// Zip creation Error
 		                    $article->text = str_replace($onedir[0], Text::_('PLG_CONTENT_CGZIPDIR_ERROR'), $article->text);

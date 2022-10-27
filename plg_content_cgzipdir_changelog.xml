@@ -3,6 +3,18 @@
 		<element>cgzipdir</element>
 		<type>plugin</type>
 		<group>content</group>
+		<version>1.0.5</version>
+        <note>
+            <item>Update : 27/10/2022</item>
+        </note>
+         <fix>
+            <item>wrong download file name</item>
+        </fix>
+	</changelog>
+	<changelog>
+		<element>cgzipdir</element>
+		<type>plugin</type>
+		<group>content</group>
 		<version>1.0.4</version>
         <note>
             <item>Update : 27/10/2022</item>
