@@ -1,6 +1,6 @@
 <?php 
 /**
- * @version		1.0.3
+ * @version		1.0.4
  * @package		CGZipDir content plugin
  * @author		ConseilGouz
  * @copyright	Copyright (C) 2022 ConseilGouz. All rights reserved.
@@ -10,6 +10,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 class plgContentCGZipDir extends CMSPlugin
 {	
@@ -34,6 +35,7 @@ class plgContentCGZipDir extends CMSPlugin
 		}
 		$regex = '/{'.$shortcode.'[\s\S]+?{\/'.$shortcode.'}*\s*/'; // get each accordeon chunk
 		if (preg_match_all($regex,$article->text,$matches,PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER)) {
+			$uri = Uri::getInstance();
 		    $regex = '/(?:<(div|p)[^>]*>)?{'.$shortcode.'(?:=(.+))?}(?(1) *<\/\1>)?([\s\S]+?)(?:<(div|p)[^>]*>)?{\/'.$shortcode.'}(?(4) *<\/\4>)/i';
 		    foreach($matches[0] as $key=>$ashort) {
 		        if (preg_match_all($regex, $ashort[0], $dirs, PREG_SET_ORDER)) { // ensure the more specific regex matches
@@ -41,7 +43,7 @@ class plgContentCGZipDir extends CMSPlugin
 		                $backup = str_replace('/','_',$onedir[3]).'.zip';
 		                if ($this->createzip($onedir[3],$backup)) { // zip a directory
 		                  $base =  str_replace('/','_',$onedir[3]);
-		                  $output = "<a href='tmp/".$backup."' download='tmp/".$base.".zip' class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
+		                  $output = "<a href='".$uri::root()."/tmp/".$backup."' download='".$uri::root()."/tmp/".$base.".zip' class='btn btn_zipdir'>".TEXT::_('PLG_CONTENT_CGZIPDIR_BTNTXT').$onedir[3]."</a>";
 		                  $article->text = str_replace($onedir[0], $output, $article->text);
 		                } else {// Zip creation Error
 		                    $article->text = str_replace($onedir[0], Text::_('PLG_CONTENT_CGZIPDIR_ERROR'), $article->text);
