@@ -1,9 +1,9 @@
 <?php
 /**
-* CG ZipDir Plugin  - Joomla 4.0.0 Module 
-* Version			: 1.0.2
-* copyright 		: Copyright (C) 2022 ConseilGouz. All rights reserved.
-* license    		: http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+* CG ZipDir Plugin  - Joomla 4.x/5.x plugin
+* Version			: 1.0.6
+* copyright 		: Copyright (C) 2023 ConseilGouz. All rights reserved.
+* license    		: https://www.gnu.org/licenses/gpl-3.0.html GNU/GPL
 */
 // No direct access to this file
 defined('_JEXEC') or die;
@@ -11,6 +11,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Version;
+use Joomla\CMS\Log\Log;
 use Joomla\Filesystem\File;
 
 class plgcontentcgzipdirInstallerScript
@@ -105,7 +106,7 @@ class plgcontentcgzipdirInstallerScript
 	        $db->execute();
         }
         catch (RuntimeException $e) {
-            JLog::add('unable to enable '.$this->name, JLog::ERROR, 'jerror');
+            Log::add('unable to enable '.$this->name, Log::ERROR, 'jerror');
         }
 
 	}
