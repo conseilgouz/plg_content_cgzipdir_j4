@@ -9,9 +9,9 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Version;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
 
 class plgcontentcgzipdirInstallerScript
 {
@@ -22,6 +22,7 @@ class plgcontentcgzipdirInstallerScript
 	private $extname                 = 'cgzipdir';
 	private $previous_version        = '';
 	private $dir           = null;
+	private $lang;
 	private $installerName = 'plgcontentcgzipdirinstaller';
 	public function __construct()
 	{
@@ -144,7 +145,7 @@ class plgcontentcgzipdirInstallerScript
 	}
 	private function uninstallInstaller()
 	{
-		if ( ! JFolder::exists(JPATH_PLUGINS . '/system/' . $this->installerName)) {
+		if ( ! is_dir(JPATH_PLUGINS . '/system/' . $this->installerName)) {
 			return;
 		}
 		$this->delete([
